@@ -6,8 +6,8 @@
     const repository = new window.AdRoom.RoomRepository(client);
     const notice = new window.LocalBase.ui.Notice('adr-notice', { baseClass: 'adr-notice', typeClassPrefix: 'is-' });
     const calendar = new window.AdRoom.MonthCalendar(byId('adr-calendar-head'), byId('adr-calendar-body'));
-    let month = new Date().toISOString().slice(0, 7);
-    let state = null;
+    let month = formatMonth(new Date());
+    let loadSequence = 0;
     let workflow;
     const dialog = new window.AdRoom.BookingDialog(
         byId('adr-booking-dialog'),
@@ -17,21 +17,28 @@
     workflow = new window.AdRoom.BookingWorkflow({ repository, notice, dialog, reload: load });
 
     async function load() {
+        const sequence = ++loadSequence;
+        const requestedMonth = month;
         try {
-            state = await repository.month(month);
-            byId('adr-month').value = month;
-            calendar.render(state);
-            dialog.setRooms(state.rooms);
+            const data = await repository.month(requestedMonth);
+            if (sequence !== loadSequence) return;
+            byId('adr-month').value = requestedMonth;
+            calendar.render(data);
+            dialog.setRooms(data.rooms);
         } catch (error) {
-            notice.error(error, 'Der Raumplan konnte nicht geladen werden.');
+            if (sequence === loadSequence) notice.error(error, 'Der Raumplan konnte nicht geladen werden.');
         }
     }
 
     function shiftMonth(delta) {
         const [year, value] = month.split('-').map(Number);
         const next = new Date(year, value - 1 + delta, 1);
-        month = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`;
+        month = formatMonth(next);
         void load();
+    }
+
+    function formatMonth(date) {
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     }
 
     byId('adr-previous').addEventListener('click', () => shiftMonth(-1));
