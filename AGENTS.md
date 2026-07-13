@@ -33,6 +33,7 @@ Nextcloud-App-ID:
 - Persistente Modelle bieten `get(...)`, `get_all([...])` und `toArray()`; direkte Modellpersistenz ist nicht erlaubt.
 - QueryBuilder-Parameter werden gebunden. Keine SQL-Fragmente aus Requests.
 - Der App-Root erfuellt den Nextcloud-Scrollvertrag; nur die Monatsmatrix scrollt horizontal.
+- Die Raumverwaltung und alle kuenftigen dauerhaften Konfigurationen liegen ausschliesslich im eigenen Tab `Einstellungen`; der Raumkalender bleibt die fachliche Hauptansicht.
 
 ## Gemeinsame Suite-Navigation
 
@@ -49,4 +50,3 @@ Nextcloud-App-ID:
 - Migrationen laufen ueber `occ app:enable adroom` beziehungsweise `occ upgrade`.
 - Schnelle Tests: `php tests/run.php` und `node tests/run-js.mjs`.
 - Controller-, DI- und Migrationsaenderungen zusaetzlich in DDEV pruefen.
-

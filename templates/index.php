@@ -26,7 +26,7 @@ style('adroom','style');
     <div id="adr-notice" class="adr-notice" role="status" aria-live="polite" hidden></div>
     <nav class="adr-tabs" role="tablist" aria-label="Raumplaner Bereiche">
         <button type="button" id="adr-tab-calendar" role="tab" aria-controls="adr-calendar-view" aria-selected="true">Raumkalender</button>
-        <button type="button" id="adr-tab-rooms" role="tab" aria-controls="adr-room-view" aria-selected="false" hidden>Räume verwalten</button>
+        <button type="button" id="adr-tab-settings" role="tab" aria-controls="adr-settings-view" aria-selected="false" hidden>Einstellungen</button>
     </nav>
     <section id="adr-calendar-view" role="tabpanel" aria-labelledby="adr-tab-calendar">
         <div class="adr-table-wrap">
@@ -37,7 +37,7 @@ style('adroom','style');
             </table>
         </div>
     </section>
-    <section id="adr-room-view" role="tabpanel" aria-labelledby="adr-tab-rooms" hidden>
+    <section id="adr-settings-view" role="tabpanel" aria-labelledby="adr-tab-settings" hidden>
         <h2>Räume verwalten</h2>
         <p>Beim Löschen eines Raums werden auch alle zugehörigen Buchungen gelöscht.</p>
         <div class="adr-table-wrap"><table class="adr-room-table"><caption>Vorhandene Räume</caption><thead><tr><th>Name</th><th>Beschreibung</th><th>Reihenfolge</th><th>Aktionen</th></tr></thead><tbody id="adr-room-body"></tbody></table></div>
@@ -64,4 +64,3 @@ style('adroom','style');
         </form>
     </dialog>
 </main>
-
