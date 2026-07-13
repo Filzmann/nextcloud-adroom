@@ -9,6 +9,9 @@
     background: var(--color-main-background);
 }
 
+.adr-admin { width:100%; max-width:none; box-sizing:border-box; }
+.adr-admin [hidden] { display:none !important; }
+
 .adr-app [hidden] { display: none !important; }
 .adr-header,.adr-month-navigation,.adr-tabs,.adr-room-form,.adr-time-row,.adr-dialog header,.adr-dialog footer { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 .adr-header { justify-content:space-between; align-items:flex-end; margin-bottom:10px; }
@@ -34,6 +37,8 @@
 .adr-calendar tr.is-holiday > * { border-top:2px solid var(--color-primary-element); }
 .adr-booking-stack { display:flex; align-items:flex-start; gap:4px; min-height:34px; }
 .adr-booking { position:relative; display:grid; gap:1px; min-width:122px; padding:5px 28px 5px 7px; border-left:3px solid var(--color-primary-element); border-radius:var(--border-radius); background:var(--color-main-background); box-shadow:0 1px 3px var(--color-box-shadow); }
+.adr-booking-purpose { color:var(--color-text-maxcontrast); font-size:.85em; }
+.adr-booking-title { font-weight:600; }
 .adr-booking small { color:var(--color-text-maxcontrast); }
 .adr-booking-actions { position:absolute; top:2px; right:2px; display:grid; gap:1px; }
 .adr-icon-button { display:inline-grid; place-items:center; width:26px; min-width:26px; height:26px; min-height:26px; padding:0; border-radius:50%; font-size:18px; line-height:1; }

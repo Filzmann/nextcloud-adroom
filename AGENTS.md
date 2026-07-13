@@ -15,7 +15,8 @@ Nextcloud-App-ID:
 ## Fachvertrag
 
 - Der Monatsplan zeigt Tage als Zeilen und aktive Raeume als Spalten.
-- Buchungen bestehen aus Raum, Beginn, Ende, Zweck und der Nextcloud-UID der buchenden Person.
+- Buchungen bestehen aus Raum, Beginn, Ende, standardisiertem Zweck, frei benennbarem Titel und der Nextcloud-UID der buchenden Person. Der Titel bezeichnet zum Beispiel ASN, Gremium oder Fortbildungsthema.
+- Als häufige Zwecke werden AT, Sitzung, BQ, Fortbildung, SV, HB und LG angeboten; die Liste bleibt durch die freie Texteingabe erweiterbar.
 - Buchungen liegen innerhalb eines Kalendertags, verwenden 15-Minuten-Schritte und sind zwischen 06:00 und 21:00 Uhr erlaubt.
 - Buchungen desselben Raums duerfen sich nicht ueberschneiden. Angrenzende Buchungen sind erlaubt.
 - Alle angemeldeten Nutzer*innen duerfen Raeume und Buchungen lesen sowie eigene Buchungen anlegen, bearbeiten, in andere Raeume verschieben und loeschen.
@@ -33,7 +34,7 @@ Nextcloud-App-ID:
 - Persistente Modelle bieten `get(...)`, `get_all([...])` und `toArray()`; direkte Modellpersistenz ist nicht erlaubt.
 - QueryBuilder-Parameter werden gebunden. Keine SQL-Fragmente aus Requests.
 - Der App-Root erfuellt den Nextcloud-Scrollvertrag; nur die Monatsmatrix scrollt horizontal.
-- Die Raumverwaltung und alle kuenftigen dauerhaften Konfigurationen liegen ausschliesslich im eigenen Tab `Einstellungen`; der Raumkalender bleibt die fachliche Hauptansicht.
+- Die organisationsweite Raumverwaltung liegt als eigener Abschnitt `Räume` im Nextcloud-Adminbereich der Suite. Der Raumkalender enthält nur fachliche Buchungsfunktionen; künftige persönliche Einstellungen gehören in einen eigenen App-Tab.
 
 ## Gemeinsame Suite-Navigation
 

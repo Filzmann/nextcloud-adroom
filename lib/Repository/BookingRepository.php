@@ -17,7 +17,7 @@ final class BookingRepository {
     /** @return list<Booking> */
     public function findRange(DateTimeImmutable $start, DateTimeImmutable $end): array {
         $qb = $this->db->getQueryBuilder();
-        $rows = $qb->select('id','room_id','user_uid','purpose','starts_at','ends_at')->from('adr_bookings')
+        $rows = $qb->select('id','room_id','user_uid','purpose','title','starts_at','ends_at')->from('adr_bookings')
             ->where($qb->expr()->lt('starts_at',$qb->createNamedParameter($end,IQueryBuilder::PARAM_DATETIME_IMMUTABLE)))
             ->andWhere($qb->expr()->gt('ends_at',$qb->createNamedParameter($start,IQueryBuilder::PARAM_DATETIME_IMMUTABLE)))
             ->orderBy('starts_at','ASC')->executeQuery()->fetchAllAssociative();
@@ -26,7 +26,7 @@ final class BookingRepository {
 
     public function find(int $id): ?Booking {
         $qb = $this->db->getQueryBuilder();
-        $row = $qb->select('id','room_id','user_uid','purpose','starts_at','ends_at')->from('adr_bookings')->where($qb->expr()->eq('id',$qb->createNamedParameter($id,IQueryBuilder::PARAM_INT)))->executeQuery()->fetchAssociative();
+        $row = $qb->select('id','room_id','user_uid','purpose','title','starts_at','ends_at')->from('adr_bookings')->where($qb->expr()->eq('id',$qb->createNamedParameter($id,IQueryBuilder::PARAM_INT)))->executeQuery()->fetchAssociative();
         return $row === false ? null : Booking::get($this->mapRow($row));
     }
 
@@ -43,8 +43,8 @@ final class BookingRepository {
 
     public function save(Booking $booking): int {
         $now = new DateTimeImmutable('now',new DateTimeZone('UTC'));
-        $values = ['room_id'=>$booking->roomId(),'user_uid'=>$booking->userUid(),'purpose'=>$booking->purpose(),'starts_at'=>$booking->startsAt(),'ends_at'=>$booking->endsAt(),'updated_at'=>$now];
-        $types = ['room_id'=>IQueryBuilder::PARAM_INT,'user_uid'=>IQueryBuilder::PARAM_STR,'purpose'=>IQueryBuilder::PARAM_STR,'starts_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE,'ends_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE,'updated_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE];
+        $values = ['room_id'=>$booking->roomId(),'user_uid'=>$booking->userUid(),'purpose'=>$booking->purpose(),'title'=>$booking->title(),'starts_at'=>$booking->startsAt(),'ends_at'=>$booking->endsAt(),'updated_at'=>$now];
+        $types = ['room_id'=>IQueryBuilder::PARAM_INT,'user_uid'=>IQueryBuilder::PARAM_STR,'purpose'=>IQueryBuilder::PARAM_STR,'title'=>IQueryBuilder::PARAM_STR,'starts_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE,'ends_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE,'updated_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE];
         $qb = $this->db->getQueryBuilder();
         $insert = $booking->id() === null;
         if ($insert) {
@@ -69,7 +69,6 @@ final class BookingRepository {
 
     private function mapRow(array $row): array {
         $utc=new DateTimeZone('UTC');
-        return ['id'=>(int)$row['id'],'roomId'=>(int)$row['room_id'],'userUid'=>(string)$row['user_uid'],'purpose'=>(string)$row['purpose'],'startsAt'=>new DateTimeImmutable((string)$row['starts_at'],$utc),'endsAt'=>new DateTimeImmutable((string)$row['ends_at'],$utc)];
+        return ['id'=>(int)$row['id'],'roomId'=>(int)$row['room_id'],'userUid'=>(string)$row['user_uid'],'purpose'=>(string)$row['purpose'],'title'=>(string)$row['title'],'startsAt'=>new DateTimeImmutable((string)$row['starts_at'],$utc),'endsAt'=>new DateTimeImmutable((string)$row['ends_at'],$utc)];
     }
 }
-

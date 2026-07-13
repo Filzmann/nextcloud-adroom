@@ -39,27 +39,29 @@ final class BookingService {
         return ['month'=>$month,'rooms'=>$roomItems,'bookings'=>$bookingItems,'holidays'=>$this->holidays->forMonth((int)$matches[1],(int)$matches[2]),'capabilities'=>['canManageRooms'=>$access->canManageRooms()]];
     }
 
-    public function create(int $roomId,string $start,string $end,string $purpose,string $actorUid): int {
-        return $this->save(null,$roomId,$start,$end,$purpose,$actorUid);
+    public function create(int $roomId,string $start,string $end,string $purpose,string $title,string $actorUid): int {
+        return $this->save(null,$roomId,$start,$end,$purpose,$title,$actorUid);
     }
 
-    public function update(Booking $existing,int $roomId,string $start,string $end,string $purpose): int {
-        return $this->save($existing->id(),$roomId,$start,$end,$purpose,$existing->userUid());
+    public function update(Booking $existing,int $roomId,string $start,string $end,string $purpose,string $title): int {
+        return $this->save($existing->id(),$roomId,$start,$end,$purpose,$title,$existing->userUid());
     }
 
     public function delete(int $id): void { $this->bookings->delete($id); }
 
-    private function save(?int $id,int $roomId,string $start,string $end,string $purpose,string $userUid): int {
+    private function save(?int $id,int $roomId,string $start,string $end,string $purpose,string $title,string $userUid): int {
         if ($this->rooms->get($roomId)===null) throw new \OutOfBoundsException('Raum nicht gefunden.');
-        $purpose=trim($purpose);
-        if ($purpose==='' || $this->length($purpose)>255 || $userUid==='') throw new \InvalidArgumentException('Zweck ist erforderlich.');
+        $purpose=trim($purpose); $title=trim($title);
+        if ($purpose==='' || $this->length($purpose)>255) throw new \InvalidArgumentException('Zweck ist erforderlich.');
+        if ($title==='' || $this->length($title)>255) throw new \InvalidArgumentException('Titel ist erforderlich.');
+        if ($userUid==='') throw new \InvalidArgumentException('Buchende Person ist erforderlich.');
         $startsAt=$this->parseLocal($start); $endsAt=$this->parseLocal($end);
         if ($startsAt->format('Y-m-d')!==$endsAt->format('Y-m-d') || $startsAt >= $endsAt) throw new \InvalidArgumentException('Beginn und Ende muessen am selben Tag in richtiger Reihenfolge liegen.');
         if ($startsAt->format('H:i')<'06:00' || $endsAt->format('H:i')>'21:00') throw new \InvalidArgumentException('Buchungen sind zwischen 06:00 und 21:00 Uhr erlaubt.');
         if ((int)$startsAt->format('i')%15!==0 || (int)$endsAt->format('i')%15!==0) throw new \InvalidArgumentException('Buchungen verwenden 15-Minuten-Schritte.');
         $startUtc=$startsAt->setTimezone($this->utc); $endUtc=$endsAt->setTimezone($this->utc);
         if ($this->bookings->overlaps($roomId,$startUtc,$endUtc,$id)) throw new BookingConflictException('Der Raum ist in diesem Zeitraum bereits belegt.');
-        return $this->bookings->save(Booking::get(['id'=>$id,'roomId'=>$roomId,'userUid'=>$userUid,'purpose'=>$purpose,'startsAt'=>$startUtc,'endsAt'=>$endUtc]));
+        return $this->bookings->save(Booking::get(['id'=>$id,'roomId'=>$roomId,'userUid'=>$userUid,'purpose'=>$purpose,'title'=>$title,'startsAt'=>$startUtc,'endsAt'=>$endUtc]));
     }
 
     private function parseLocal(string $value): DateTimeImmutable {

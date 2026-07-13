@@ -30,17 +30,17 @@ final class ApiController extends Controller {
     }
 
     #[NoAdminRequired]
-    public function createBooking(int $roomId,string $start,string $end,string $purpose): JSONResponse {
+    public function createBooking(int $roomId,string $start,string $end,string $purpose,string $title): JSONResponse {
         if (!$this->access->canView()) return $this->denied();
-        try { return new JSONResponse(['id'=>$this->bookings->create($roomId,$start,$end,$purpose,$this->access->currentUid())],Http::STATUS_CREATED); }
+        try { return new JSONResponse(['id'=>$this->bookings->create($roomId,$start,$end,$purpose,$title,$this->access->currentUid())],Http::STATUS_CREATED); }
         catch (BookingConflictException $error) { return $this->error($error->getMessage(),Http::STATUS_CONFLICT); }
         catch (\OutOfBoundsException $error) { return $this->error($error->getMessage(),Http::STATUS_NOT_FOUND); }
         catch (\Throwable $error) { $this->logger->warning('Raumbuchung wurde abgelehnt.',['exception'=>$error]); return $this->error('Die Buchung ist ungueltig.',Http::STATUS_BAD_REQUEST); }
     }
 
     #[NoAdminRequired]
-    public function updateBooking(int $id,int $roomId,string $start,string $end,string $purpose): JSONResponse {
-        try { $booking=$this->bookings->existing($id); if (!$this->access->canManageBooking($booking)) return $this->denied(); return new JSONResponse(['id'=>$this->bookings->update($booking,$roomId,$start,$end,$purpose)]); }
+    public function updateBooking(int $id,int $roomId,string $start,string $end,string $purpose,string $title): JSONResponse {
+        try { $booking=$this->bookings->existing($id); if (!$this->access->canManageBooking($booking)) return $this->denied(); return new JSONResponse(['id'=>$this->bookings->update($booking,$roomId,$start,$end,$purpose,$title)]); }
         catch (BookingConflictException $error) { return $this->error($error->getMessage(),Http::STATUS_CONFLICT); }
         catch (\OutOfBoundsException $error) { return $this->error($error->getMessage(),Http::STATUS_NOT_FOUND); }
         catch (\Throwable $error) { $this->logger->warning('Raumbuchung konnte nicht aktualisiert werden.',['exception'=>$error]); return $this->error('Die Buchung ist ungueltig.',Http::STATUS_BAD_REQUEST); }
@@ -53,14 +53,12 @@ final class ApiController extends Controller {
         catch (\Throwable $error) { $this->logger->error('Raumbuchung konnte nicht geloescht werden.',['exception'=>$error]); return $this->error('Die Buchung konnte nicht geloescht werden.',Http::STATUS_BAD_REQUEST); }
     }
 
-    #[NoAdminRequired]
     public function createRoom(string $name,string $description='',int $sortOrder=0): JSONResponse {
         if (!$this->access->canManageRooms()) return $this->denied();
         try { return new JSONResponse(['id'=>$this->rooms->save(null,$name,$description,$sortOrder)],Http::STATUS_CREATED); }
         catch (\Throwable $error) { $this->logger->warning('Raum konnte nicht angelegt werden.',['exception'=>$error]); return $this->error('Der Raum konnte nicht gespeichert werden.',Http::STATUS_BAD_REQUEST); }
     }
 
-    #[NoAdminRequired]
     public function updateRoom(int $id,string $name,string $description='',int $sortOrder=0): JSONResponse {
         if (!$this->access->canManageRooms()) return $this->denied();
         try { return new JSONResponse(['id'=>$this->rooms->save($id,$name,$description,$sortOrder)]); }
@@ -68,7 +66,6 @@ final class ApiController extends Controller {
         catch (\Throwable $error) { $this->logger->warning('Raum konnte nicht aktualisiert werden.',['exception'=>$error]); return $this->error('Der Raum konnte nicht gespeichert werden.',Http::STATUS_BAD_REQUEST); }
     }
 
-    #[NoAdminRequired]
     public function deleteRoom(int $id): JSONResponse {
         if (!$this->access->canManageRooms()) return $this->denied();
         try { $this->rooms->delete($id); return new JSONResponse(['deleted'=>true]); }
@@ -79,4 +76,3 @@ final class ApiController extends Controller {
     private function denied(): JSONResponse { return $this->error('Keine Berechtigung.',Http::STATUS_FORBIDDEN); }
     private function error(string $message,int $status): JSONResponse { return new JSONResponse(['message'=>$message],$status); }
 }
-

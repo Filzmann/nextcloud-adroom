@@ -31,7 +31,7 @@
         }
         bookingCard(booking) {
             const card=document.createElement('article'); card.className='adr-booking';
-            const time=document.createElement('strong'); time.textContent=`${this.time(booking.startsAt)}–${this.time(booking.endsAt)}`; const purpose=document.createElement('span'); purpose.textContent=booking.purpose; const user=document.createElement('small'); user.textContent=booking.userName; card.append(time,purpose,user);
+            const time=document.createElement('strong'); time.textContent=`${this.time(booking.startsAt)}–${this.time(booking.endsAt)}`; const purpose=document.createElement('span'); purpose.className='adr-booking-purpose'; purpose.textContent=booking.purpose; const title=document.createElement('span'); title.className='adr-booking-title'; title.textContent=booking.title; const user=document.createElement('small'); user.textContent=booking.userName; card.append(time,purpose,title,user);
             if(booking.canManage){ const actions=document.createElement('div'); actions.className='adr-booking-actions'; actions.append(this.actionButton('✎','Buchung bearbeiten','adroom:edit-booking',booking),this.actionButton('×','Buchung löschen','adroom:delete-booking',booking)); card.append(actions); }
             return card;
         }
@@ -41,4 +41,3 @@
     }
     window.AdRoom=window.AdRoom||{}; window.AdRoom.MonthCalendar=MonthCalendar;
 }());
-

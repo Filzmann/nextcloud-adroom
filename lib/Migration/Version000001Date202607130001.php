@@ -35,6 +35,7 @@ final class Version000001Date202607130001 extends SimpleMigrationStep {
             $bookings->addColumn('room_id', Types::BIGINT, ['notnull' => true]);
             $bookings->addColumn('user_uid', Types::STRING, ['length' => 64, 'notnull' => true]);
             $bookings->addColumn('purpose', Types::STRING, ['length' => 255, 'notnull' => true]);
+            $bookings->addColumn('title', Types::STRING, ['length' => 255, 'notnull' => true]);
             $bookings->addColumn('starts_at', Types::DATETIME_IMMUTABLE, ['notnull' => true]);
             $bookings->addColumn('ends_at', Types::DATETIME_IMMUTABLE, ['notnull' => true]);
             $bookings->addColumn('created_at', Types::DATETIME_IMMUTABLE, ['notnull' => true]);
@@ -47,4 +48,3 @@ final class Version000001Date202607130001 extends SimpleMigrationStep {
         return $schema;
     }
 }
-

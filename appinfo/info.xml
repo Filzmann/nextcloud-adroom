@@ -4,8 +4,8 @@
     <id>adroom</id>
     <name>AD Raumplaner</name>
     <summary>Monatliche Raumbelegung und kollisionsfreie Raumbuchungen.</summary>
-    <description>Verwaltet Raeume und eigene beziehungsweise administrative Buchungen in einer kompakten Monatsmatrix.</description>
-    <version>0.1.1</version>
+    <description>Verwaltet Räume und eigene beziehungsweise administrative Buchungen in einer kompakten Monatsmatrix.</description>
+    <version>0.3.0</version>
     <licence>agpl</licence>
     <author>Simon / Codex-Prototyp</author>
     <namespace>AdRoom</namespace>
@@ -15,6 +15,9 @@
         <app>localbase</app>
         <app>orgsuite</app>
     </dependencies>
+    <settings>
+        <admin>OCA\AdRoom\Settings\Admin</admin>
+    </settings>
     <commands>
         <command>OCA\AdRoom\Command\SeedDemoCommand</command>
     </commands>
