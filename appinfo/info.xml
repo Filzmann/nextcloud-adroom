@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>adroom</id>
+    <name>AD Raumplaner</name>
+    <summary>Monatliche Raumbelegung und kollisionsfreie Raumbuchungen.</summary>
+    <description>Verwaltet Raeume und eigene beziehungsweise administrative Buchungen in einer kompakten Monatsmatrix.</description>
+    <version>0.1.0</version>
+    <licence>agpl</licence>
+    <author>Simon / Codex-Prototyp</author>
+    <namespace>AdRoom</namespace>
+    <category>organization</category>
+    <dependencies>
+        <nextcloud min-version="29" max-version="35"/>
+        <app>localbase</app>
+        <app>orgsuite</app>
+    </dependencies>
+    <commands>
+        <command>OCA\AdRoom\Command\SeedDemoCommand</command>
+    </commands>
+</info>
+

@@ -1,0 +1,57 @@
+.adr-app {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 20px 80px;
+    background: var(--color-main-background);
+}
+
+.adr-app [hidden] { display: none !important; }
+.adr-header,.adr-month-navigation,.adr-tabs,.adr-room-form,.adr-time-row,.adr-dialog header,.adr-dialog footer { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.adr-header { justify-content:space-between; align-items:flex-end; margin-bottom:10px; }
+.adr-header h1,.adr-header p { margin:0; }
+.adr-header p { color:var(--color-text-maxcontrast); }
+.adr-month-navigation label,.adr-room-form label,.adr-dialog label { display:grid; gap:4px; font-weight:600; }
+.adr-tabs { margin-bottom:12px; border-bottom:1px solid var(--color-border); }
+.adr-tabs button { margin:0; border-radius:var(--border-radius) var(--border-radius) 0 0; }
+.adr-tabs button[aria-selected="true"] { background:var(--color-primary-element-light); font-weight:700; }
+.adr-notice { margin:8px 0; padding:8px 10px; border:1px solid var(--color-border); border-radius:var(--border-radius); }
+.adr-notice.is-error { border-color:var(--color-error); }
+.adr-notice.is-success { border-color:var(--color-success); }
+.adr-table-wrap { min-width:0; max-width:100%; overflow-x:auto; }
+.adr-calendar,.adr-room-table { width:max-content; min-width:100%; border-collapse:collapse; table-layout:auto; }
+.adr-calendar caption,.adr-room-table caption { text-align:left; padding:6px 0; color:var(--color-text-maxcontrast); }
+.adr-calendar th,.adr-calendar td,.adr-room-table th,.adr-room-table td { border:1px solid var(--color-border); padding:5px; vertical-align:top; text-align:left; }
+.adr-calendar thead th { position:sticky; top:0; z-index:2; min-width:150px; background:var(--color-main-background); }
+.adr-calendar thead th:first-child { min-width:120px; }
+.adr-calendar tbody th { white-space:nowrap; background:var(--color-main-background); }
+.adr-calendar tbody th small { display:block; max-width:130px; white-space:normal; color:var(--color-text-maxcontrast); }
+.adr-calendar tr.is-saturday > * { background:var(--color-background-hover); }
+.adr-calendar tr.is-sunday > * { background:var(--color-primary-element-light); }
+.adr-calendar tr.is-holiday > * { border-top:2px solid var(--color-primary-element); }
+.adr-booking-stack { display:flex; align-items:flex-start; gap:4px; min-height:34px; }
+.adr-booking { position:relative; display:grid; gap:1px; min-width:122px; padding:5px 28px 5px 7px; border-left:3px solid var(--color-primary-element); border-radius:var(--border-radius); background:var(--color-main-background); box-shadow:0 1px 3px var(--color-box-shadow); }
+.adr-booking small { color:var(--color-text-maxcontrast); }
+.adr-booking-actions { position:absolute; top:2px; right:2px; display:grid; gap:1px; }
+.adr-icon-button { display:inline-grid; place-items:center; width:26px; min-width:26px; height:26px; min-height:26px; padding:0; border-radius:50%; font-size:18px; line-height:1; }
+.adr-icon-button:focus-visible { outline:2px solid var(--color-primary-element); outline-offset:2px; }
+.adr-add { flex:0 0 auto; }
+.adr-room-form { margin-top:16px; padding:12px; border:1px solid var(--color-border); border-radius:var(--border-radius-large); }
+.adr-room-table input { min-width:110px; width:100%; }
+.adr-dialog { width:min(520px,calc(100vw - 32px)); border:1px solid var(--color-border); border-radius:var(--border-radius-large); padding:16px; background:var(--color-main-background); color:var(--color-main-text); }
+.adr-dialog:not([open]) { display:none; }
+.adr-dialog::backdrop { background:rgba(0,0,0,.45); }
+.adr-dialog form { display:grid; gap:12px; }
+.adr-dialog header { justify-content:space-between; }
+.adr-dialog header h2 { margin:0; }
+.adr-dialog footer { justify-content:flex-end; }
+.adr-time-row > label { flex:1 1 140px; }
+
+@media (max-width:700px) {
+    .adr-app { padding:12px 10px 60px; }
+    .adr-header { align-items:stretch; }
+    .adr-month-navigation { width:100%; }
+}
