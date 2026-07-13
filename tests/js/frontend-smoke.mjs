@@ -11,6 +11,7 @@ const timeline=calendar.timeline([
     {startsAt:'2026-07-13T10:00:00',endsAt:'2026-07-13T11:00:00'},
 ]);
 if(timeline.join(',')!=='360,480,540,600,660,1260') throw new Error(`Gemeinsame Zeitachse ist falsch: ${timeline.join(',')}`);
-if(calendar.gridLine(timeline,600)!==4||calendar.scheduleRows(timeline).split(' ').length!==timeline.length-1) throw new Error('Buchungspositionen werden nicht auf gemeinsame Zeitzeilen abgebildet.');
+const rows=calendar.scheduleRows(timeline);
+if(calendar.gridLine(timeline,600)!==4||(rows.match(/minmax\(/g)||[]).length!==timeline.length-1||!rows.includes(', auto)')) throw new Error('Buchungspositionen werden nicht auf flexible gemeinsame Zeitzeilen abgebildet.');
 for(const removed of ['adr-tab-settings',"showView('settings')"]) if(sources.includes(removed)) throw new Error(`Administrative Raumverwaltung liegt noch in der Fachansicht: ${removed}`);
 console.log('AD Raumplaner frontend smoke test passed');

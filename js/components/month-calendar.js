@@ -43,7 +43,7 @@
         }
         actionButton(icon,label,eventName,booking){ const button=document.createElement('button'); button.type='button'; button.className='adr-icon-button'; button.title=label; button.setAttribute('aria-label',label); button.innerHTML=`<span aria-hidden="true">${icon}</span>`; button.addEventListener('click',()=>window.dispatchEvent(new CustomEvent(eventName,{detail:{booking}}))); return button; }
         timeline(bookings){ return [...new Set([360,1260,...bookings.flatMap((booking)=>[this.minute(booking.startsAt),this.minute(booking.endsAt)])])].sort((a,b)=>a-b); }
-        scheduleRows(timeline){ return timeline.slice(0,-1).map((start,index)=>`${Math.max(6,Math.min(36,Math.round((timeline[index+1]-start)/5)))}px`).join(' '); }
+        scheduleRows(timeline){ return timeline.slice(0,-1).map((start,index)=>`minmax(${Math.max(6,Math.min(36,Math.round((timeline[index+1]-start)/5)))}px, auto)`).join(' '); }
         gridLine(timeline,minute){ return Math.max(1,timeline.indexOf(minute)+1); }
         minute(value){ const date=localDate(value); return date.getHours()*60+date.getMinutes(); }
         dateKey(value){ const date=localDate(value); return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`; }
