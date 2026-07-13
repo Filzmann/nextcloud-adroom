@@ -35,8 +35,12 @@
 .adr-calendar tr.is-saturday > * { background:var(--color-background-hover); }
 .adr-calendar tr.is-sunday > * { background:var(--color-primary-element-light); }
 .adr-calendar tr.is-holiday > * { border-top:2px solid var(--color-primary-element); }
-.adr-booking-stack { display:flex; align-items:flex-start; gap:4px; min-height:34px; }
-.adr-booking { position:relative; display:grid; gap:1px; min-width:122px; padding:5px 28px 5px 7px; border-left:3px solid var(--color-primary-element); border-radius:var(--border-radius); background:var(--color-main-background); box-shadow:0 1px 3px var(--color-box-shadow); }
+.adr-day-schedule-cell { padding:0 !important; }
+.adr-day-schedule { display:grid; position:relative; min-height:42px; isolation:isolate; }
+.adr-room-lane { position:relative; min-width:150px; border-right:1px solid var(--color-border); background:repeating-linear-gradient(to bottom,transparent 0,transparent 35px,var(--color-border) 36px); }
+.adr-room-lane:last-of-type { border-right:0; }
+.adr-room-lane .adr-add { position:sticky; top:4px; margin:4px; z-index:3; }
+.adr-booking { position:relative; z-index:2; align-self:stretch; display:grid; gap:1px; min-width:122px; min-height:34px; margin:1px 3px; padding:5px 28px 5px 7px; overflow:hidden; border-left:3px solid var(--color-primary-element); border-radius:var(--border-radius); background:var(--color-main-background); box-shadow:0 1px 3px var(--color-box-shadow); }
 .adr-booking-purpose { color:var(--color-text-maxcontrast); font-size:.85em; }
 .adr-booking-title { font-weight:600; }
 .adr-booking small { color:var(--color-text-maxcontrast); }

@@ -14,7 +14,7 @@ Nextcloud-App-ID:
 
 ## Fachvertrag
 
-- Der Monatsplan zeigt Tage als Zeilen und aktive Raeume als Spalten.
+- Der Monatsplan zeigt Tage als Zeilen und aktive Räume als Spalten. Innerhalb jedes Tages teilen sich alle Raumspalten eine vertikale Zeitachse: aufeinanderfolgende Buchungen stehen untereinander, zeitliche Lücken erzeugen Abstand und Buchungen verschiedener Räume bleiben zeitlich vergleichbar ausgerichtet.
 - Buchungen bestehen aus Raum, Beginn, Ende, standardisiertem Zweck, frei benennbarem Titel und der Nextcloud-UID der buchenden Person. Der Titel bezeichnet zum Beispiel ASN, Gremium oder Fortbildungsthema.
 - Als häufige Zwecke werden AT, Sitzung, BQ, Fortbildung, SV, HB und LG angeboten; die Liste bleibt durch die freie Texteingabe erweiterbar.
 - Buchungen liegen innerhalb eines Kalendertags, verwenden 15-Minuten-Schritte und sind zwischen 06:00 und 21:00 Uhr erlaubt.
