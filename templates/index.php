@@ -6,6 +6,7 @@ script('orgsuite','suite-navigation');
 script('adroom','models/room');
 script('adroom','models/booking');
 script('adroom','repositories/room-repository');
+script('adroom','modules/booking-timeline');
 script('adroom','components/month-calendar');
 script('adroom','components/booking-dialog');
 script('adroom','main');
