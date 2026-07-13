@@ -1,6 +1,7 @@
 <?php
 script('localbase','api/api-client');
 script('localbase','models/model');
+script('localbase','repositories/repository');
 script('localbase','ui/ui');
 script('orgsuite','suite-navigation');
 script('adroom','models/room');

@@ -1,15 +1,44 @@
-(function () {
+(function() {
     'use strict';
-    class RoomRepository {
-        constructor(client) { this.client=client; }
-        async month(month) { const data=await this.client.request(`/api/month/${this.client.encode(month)}`); return {...data,rooms:window.AdRoom.Room.get_all(data.rooms),bookings:window.AdRoom.Booking.get_all(data.bookings)}; }
-        createBooking(payload) { return this.client.request('/api/bookings',{method:'POST',body:JSON.stringify(payload)}); }
-        updateBooking(id,payload) { return this.client.request(`/api/bookings/${id}`,{method:'PUT',body:JSON.stringify(payload)}); }
-        deleteBooking(id) { return this.client.request(`/api/bookings/${id}`,{method:'DELETE'}); }
-        createRoom(payload) { return this.client.request('/api/rooms',{method:'POST',body:JSON.stringify(payload)}); }
-        updateRoom(id,payload) { return this.client.request(`/api/rooms/${id}`,{method:'PUT',body:JSON.stringify(payload)}); }
-        deleteRoom(id) { return this.client.request(`/api/rooms/${id}`,{method:'DELETE'}); }
-    }
-    window.AdRoom=window.AdRoom||{}; window.AdRoom.RoomRepository=RoomRepository;
-}());
 
+    const BaseRepository = window.LocalBase.repositories.Repository;
+
+    /** Zweck: Kapselt Raum-, Buchungs- und Monatsendpunkte hinter dem gemeinsamen LocalBase-Repositoryvertrag. */
+    class RoomRepository extends BaseRepository {
+        async month(month) {
+            const data = await this.request(`/api/month/${this.encode(month)}`);
+            return {
+                ...data,
+                rooms: window.AdRoom.Room.get_all(data.rooms),
+                bookings: window.AdRoom.Booking.get_all(data.bookings),
+            };
+        }
+
+        createBooking(payload) {
+            return this.post('/api/bookings', payload);
+        }
+
+        updateBooking(id, payload) {
+            return this.request(`/api/bookings/${this.encode(id)}`, { method: 'PUT', body: JSON.stringify(payload) });
+        }
+
+        deleteBooking(id) {
+            return this.request(`/api/bookings/${this.encode(id)}`, { method: 'DELETE' });
+        }
+
+        createRoom(payload) {
+            return this.post('/api/rooms', payload);
+        }
+
+        updateRoom(id, payload) {
+            return this.request(`/api/rooms/${this.encode(id)}`, { method: 'PUT', body: JSON.stringify(payload) });
+        }
+
+        deleteRoom(id) {
+            return this.request(`/api/rooms/${this.encode(id)}`, { method: 'DELETE' });
+        }
+    }
+
+    window.AdRoom = window.AdRoom || {};
+    window.AdRoom.RoomRepository = RoomRepository;
+}());
