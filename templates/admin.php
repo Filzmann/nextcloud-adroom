@@ -5,6 +5,7 @@ script('localbase', 'repositories/repository');
 script('localbase', 'ui/ui');
 script('adroom', 'models/room');
 script('adroom', 'repositories/room-repository');
+script('adroom', 'modules/room-workflow');
 script('adroom', 'components/room-settings');
 script('adroom', 'admin');
 style('adroom', 'style');
