@@ -1,14 +1,14 @@
 <?php
-script('localbase', 'api/api-client');
-script('localbase', 'models/model');
-script('localbase', 'repositories/repository');
-script('localbase', 'ui/ui');
-script('adroom', 'models/room');
-script('adroom', 'repositories/room-repository');
-script('adroom', 'modules/room-workflow');
-script('adroom', 'components/room-settings');
-script('adroom', 'admin');
-style('adroom', 'style');
+\OCP\Util::addScript('localbase', 'api/api-client');
+\OCP\Util::addScript('localbase', 'models/model');
+\OCP\Util::addScript('localbase', 'repositories/repository');
+\OCP\Util::addScript('localbase', 'ui/ui');
+\OCP\Util::addScript('adroom', 'models/room');
+\OCP\Util::addScript('adroom', 'repositories/room-repository');
+\OCP\Util::addScript('adroom', 'modules/room-workflow');
+\OCP\Util::addScript('adroom', 'components/room-settings');
+\OCP\Util::addScript('adroom', 'admin');
+\OCP\Util::addStyle('adroom', 'style');
 ?>
 <section id="adroom-admin" class="section adr-admin" aria-labelledby="adr-admin-heading">
     <h2 id="adr-admin-heading">Räume</h2>

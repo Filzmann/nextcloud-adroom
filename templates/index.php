@@ -1,19 +1,19 @@
 <?php
-script('localbase','api/api-client');
-script('localbase','models/model');
-script('localbase','repositories/repository');
-script('localbase','ui/ui');
-script('orgsuite','suite-navigation');
-script('adroom','models/room');
-script('adroom','models/booking');
-script('adroom','repositories/room-repository');
-script('adroom','modules/booking-timeline');
-script('adroom','modules/booking-workflow');
-script('adroom','components/month-calendar');
-script('adroom','components/booking-dialog');
-script('adroom','main');
-style('orgsuite','suite-navigation');
-style('adroom','style');
+\OCP\Util::addScript('localbase','api/api-client');
+\OCP\Util::addScript('localbase','models/model');
+\OCP\Util::addScript('localbase','repositories/repository');
+\OCP\Util::addScript('localbase','ui/ui');
+\OCP\Util::addScript('orgsuite','suite-navigation');
+\OCP\Util::addScript('adroom','models/room');
+\OCP\Util::addScript('adroom','models/booking');
+\OCP\Util::addScript('adroom','repositories/room-repository');
+\OCP\Util::addScript('adroom','modules/booking-timeline');
+\OCP\Util::addScript('adroom','modules/booking-workflow');
+\OCP\Util::addScript('adroom','components/month-calendar');
+\OCP\Util::addScript('adroom','components/booking-dialog');
+\OCP\Util::addScript('adroom','main');
+\OCP\Util::addStyle('orgsuite','suite-navigation');
+\OCP\Util::addStyle('adroom','style');
 ?>
 <main id="adroom-app" class="adr-app">
     <div class="orgsuite-host" data-orgsuite data-suite="ad" data-current-app="adroom"></div>
