@@ -17,20 +17,46 @@ final class RoomRepository {
     /** @return list<Room> */
     public function findAll(): array {
         $qb = $this->db->getQueryBuilder();
-        $rows = $qb->select('id','name','description','sort_order')->from('adr_rooms')->orderBy('sort_order','ASC')->addOrderBy('name','ASC')->executeQuery()->fetchAllAssociative();
+        $rows = $qb
+            ->select('id', 'name', 'description', 'sort_order')
+            ->from('adr_rooms')
+            ->orderBy('sort_order', 'ASC')
+            ->addOrderBy('name', 'ASC')
+            ->executeQuery()
+            ->fetchAllAssociative();
+
         return Room::get_all(array_map([$this, 'mapRow'], $rows));
     }
 
     public function find(int $id): ?Room {
         $qb = $this->db->getQueryBuilder();
-        $row = $qb->select('id','name','description','sort_order')->from('adr_rooms')->where($qb->expr()->eq('id',$qb->createNamedParameter($id,IQueryBuilder::PARAM_INT)))->executeQuery()->fetchAssociative();
+        $row = $qb
+            ->select('id', 'name', 'description', 'sort_order')
+            ->from('adr_rooms')
+            ->where($qb->expr()->eq(
+                'id',
+                $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT),
+            ))
+            ->executeQuery()
+            ->fetchAssociative();
+
         return $row === false ? null : Room::get($this->mapRow($row));
     }
 
     public function save(Room $room): int {
         $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
-        $values = ['name'=>$room->name(),'description'=>$room->description(),'sort_order'=>$room->sortOrder(),'updated_at'=>$now];
-        $types = ['name'=>IQueryBuilder::PARAM_STR,'description'=>IQueryBuilder::PARAM_STR,'sort_order'=>IQueryBuilder::PARAM_INT,'updated_at'=>IQueryBuilder::PARAM_DATETIME_IMMUTABLE];
+        $values = [
+            'name' => $room->name(),
+            'description' => $room->description(),
+            'sort_order' => $room->sortOrder(),
+            'updated_at' => $now,
+        ];
+        $types = [
+            'name' => IQueryBuilder::PARAM_STR,
+            'description' => IQueryBuilder::PARAM_STR,
+            'sort_order' => IQueryBuilder::PARAM_INT,
+            'updated_at' => IQueryBuilder::PARAM_DATETIME_IMMUTABLE,
+        ];
         $qb = $this->db->getQueryBuilder();
         $insert = $room->id() === null;
         if ($insert) {
@@ -38,13 +64,23 @@ final class RoomRepository {
             $values['created_at'] = $now;
             $types['created_at'] = IQueryBuilder::PARAM_DATETIME_IMMUTABLE;
         } else {
-            $qb->update('adr_rooms')->where($qb->expr()->eq('id',$qb->createNamedParameter($room->id(),IQueryBuilder::PARAM_INT)));
+            $qb
+                ->update('adr_rooms')
+                ->where($qb->expr()->eq(
+                    'id',
+                    $qb->createNamedParameter($room->id(), IQueryBuilder::PARAM_INT),
+                ));
         }
-        foreach ($values as $field=>$value) {
-            $parameter = $qb->createNamedParameter($value,$types[$field]);
-            if ($insert) $qb->setValue($field,$parameter); else $qb->set($field,$parameter);
+        foreach ($values as $field => $value) {
+            $parameter = $qb->createNamedParameter($value, $types[$field]);
+            if ($insert) {
+                $qb->setValue($field, $parameter);
+            } else {
+                $qb->set($field, $parameter);
+            }
         }
         $qb->executeStatement();
+
         return $room->id() ?? $qb->getLastInsertId();
     }
 
@@ -52,9 +88,23 @@ final class RoomRepository {
         $this->db->beginTransaction();
         try {
             $qb = $this->db->getQueryBuilder();
-            $qb->delete('adr_bookings')->where($qb->expr()->eq('room_id',$qb->createNamedParameter($id,IQueryBuilder::PARAM_INT)))->executeStatement();
+            $qb
+                ->delete('adr_bookings')
+                ->where($qb->expr()->eq(
+                    'room_id',
+                    $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT),
+                ))
+                ->executeStatement();
+
             $qb = $this->db->getQueryBuilder();
-            $qb->delete('adr_rooms')->where($qb->expr()->eq('id',$qb->createNamedParameter($id,IQueryBuilder::PARAM_INT)))->executeStatement();
+            $qb
+                ->delete('adr_rooms')
+                ->where($qb->expr()->eq(
+                    'id',
+                    $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT),
+                ))
+                ->executeStatement();
+
             $this->db->commit();
         } catch (\Throwable $error) {
             $this->db->rollBack();
@@ -62,5 +112,12 @@ final class RoomRepository {
         }
     }
 
-    private function mapRow(array $row): array { return ['id'=>(int)$row['id'],'name'=>(string)$row['name'],'description'=>(string)$row['description'],'sortOrder'=>(int)$row['sort_order']]; }
+    private function mapRow(array $row): array {
+        return [
+            'id' => (int)$row['id'],
+            'name' => (string)$row['name'],
+            'description' => (string)$row['description'],
+            'sortOrder' => (int)$row['sort_order'],
+        ];
+    }
 }
