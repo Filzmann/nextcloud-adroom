@@ -45,7 +45,7 @@ final class RoomRepository {
             if ($insert) $qb->setValue($field,$parameter); else $qb->set($field,$parameter);
         }
         $qb->executeStatement();
-        return $room->id() ?? (int)$this->db->lastInsertId('adr_rooms');
+        return $room->id() ?? $qb->getLastInsertId();
     }
 
     public function delete(int $id): void {
@@ -64,4 +64,3 @@ final class RoomRepository {
 
     private function mapRow(array $row): array { return ['id'=>(int)$row['id'],'name'=>(string)$row['name'],'description'=>(string)$row['description'],'sortOrder'=>(int)$row['sort_order']]; }
 }
-

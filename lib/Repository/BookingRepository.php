@@ -59,7 +59,7 @@ final class BookingRepository {
             if ($insert) $qb->setValue($field,$parameter); else $qb->set($field,$parameter);
         }
         $qb->executeStatement();
-        return $booking->id() ?? (int)$this->db->lastInsertId('adr_bookings');
+        return $booking->id() ?? $qb->getLastInsertId();
     }
 
     public function delete(int $id): void {
