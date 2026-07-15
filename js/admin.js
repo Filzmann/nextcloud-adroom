@@ -15,6 +15,29 @@
         onRemove: room => workflow.remove(room),
     });
 
+    const demoConfirmation = byId('adr-demo-confirm');
+    const demoButton = byId('adr-demo-install');
+    const demoNotice = byId('adr-demo-notice');
+    demoConfirmation.addEventListener('change', () => { demoButton.disabled = !demoConfirmation.checked; });
+    demoButton.addEventListener('click', async () => {
+        if (!demoConfirmation.checked) return;
+        demoButton.disabled = true;
+        demoNotice.hidden = false;
+        demoNotice.className = 'adr-notice';
+        demoNotice.textContent = 'Demo-Pack wird geprüft und installiert …';
+        try {
+            const response = await client.request('/api/admin/demo-pack/install', { method: 'POST', body: '{}' });
+            demoNotice.classList.add('is-success');
+            demoNotice.textContent = `${response.result.rooms} Räume synchronisiert; ${response.result.createdBookings} Buchungen angelegt.`;
+            demoConfirmation.checked = false;
+            await load();
+        } catch (error) {
+            demoNotice.classList.add('is-error');
+            demoNotice.textContent = error.message || 'Das Demo-Pack konnte nicht installiert werden.';
+            demoButton.disabled = false;
+        }
+    });
+
     async function load() {
         try {
             const now = new Date();

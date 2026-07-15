@@ -49,6 +49,10 @@
 .adr-icon-button:focus-visible { outline:2px solid var(--color-primary-element); outline-offset:2px; }
 .adr-add { flex:0 0 auto; }
 .adr-room-form { margin-top:16px; padding:12px; border:1px solid var(--color-border); border-radius:var(--border-radius-large); }
+.adr-admin-demo { margin-top:24px; padding-top:18px; border-top:1px solid var(--color-border); }
+.adr-demo-confirm { display:block; margin:16px 0 10px; }
+.adr-notice.is-success { border:2px solid var(--color-success); color:var(--color-main-text); }
+.adr-notice.is-error { border:2px solid var(--color-error); background:var(--color-error-hover); color:var(--color-main-text); }
 .adr-room-table input { min-width:110px; width:100%; }
 .adr-dialog { width:min(520px,calc(100vw - 32px)); border:1px solid var(--color-border); border-radius:var(--border-radius-large); padding:16px; background:var(--color-main-background); color:var(--color-main-text); }
 .adr-dialog:not([open]) { display:none; }

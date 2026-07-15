@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0-rc.1
+
+- Eigenständige Navigation ohne OrgSuite ergänzt.
+- Raumverfügbarkeits- und Buchungsfähigkeiten über optionale LocalBase-Verträge veröffentlicht.
+- Ungültige harte App-Abhängigkeiten aus den Nextcloud-Metadaten entfernt.
+
 ## 0.8.8-rc.1
 
 - Eigener Nextcloud-Adminabschnitt für die ausschließlich appbezogene Raumverwaltung.
