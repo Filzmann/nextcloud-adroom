@@ -38,9 +38,9 @@ Nextcloud-App-ID:
 
 ## Gemeinsame Suite-Navigation
 
-- AD Raumplaner besitzt keinen eigenen Nextcloud-Hauptnavigationseintrag.
-- `orgsuite` stellt den Einstieg `AD` und das zentrale Menue bereit.
-- Das Template bindet `data-suite="ad"` und `data-current-app="adroom"` ein.
+- Ohne aktive OrgSuite registriert AD Raumplaner einen eigenen Nextcloud-Hauptnavigationseintrag. Ab zwei AD-Produkten ersetzt `orgsuite` diesen durch den gemeinsamen Einstieg `AD`.
+- Das Template stellt den optionalen Menühost mit `data-suite="ad"` und `data-current-app="adroom"` bereit, lädt aber keine OrgSuite-Assets direkt.
+- Ohne Kalender oder Assistenzplanung bleiben Raumbuchungen vollständig manuell nutzbar; optionale Direktbuchungen dürfen nicht als harte Abhängigkeit modelliert werden.
 - Menuesichtbarkeit ist keine Berechtigung.
 
 ## Git, DDEV und Tests

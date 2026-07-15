@@ -3,7 +3,6 @@
 \OCP\Util::addScript('localbase','models/model');
 \OCP\Util::addScript('localbase','repositories/repository');
 \OCP\Util::addScript('localbase','ui/ui');
-\OCP\Util::addScript('orgsuite','suite-navigation');
 \OCP\Util::addScript('adroom','models/room');
 \OCP\Util::addScript('adroom','models/booking');
 \OCP\Util::addScript('adroom','repositories/room-repository');
@@ -12,7 +11,6 @@
 \OCP\Util::addScript('adroom','components/month-calendar');
 \OCP\Util::addScript('adroom','components/booking-dialog');
 \OCP\Util::addScript('adroom','main');
-\OCP\Util::addStyle('orgsuite','suite-navigation');
 \OCP\Util::addStyle('adroom','style');
 ?>
 <main id="adroom-app" class="adr-app">
