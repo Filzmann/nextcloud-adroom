@@ -5,6 +5,7 @@ const calendarSource=readFileSync(new URL('../../js/components/month-calendar.js
 const timelineSource=readFileSync(new URL('../../js/modules/booking-timeline.js',import.meta.url),'utf8');
 const workflowSource=readFileSync(new URL('../../js/modules/booking-workflow.js',import.meta.url),'utf8');
 const roomWorkflowSource=readFileSync(new URL('../../js/modules/room-workflow.js',import.meta.url),'utf8');
+const adminTemplate=readFileSync(new URL('../../templates/admin.php',import.meta.url),'utf8');
 const sources=['models/room.js','models/booking.js','repositories/room-repository.js','components/booking-dialog.js','components/room-settings.js','main.js','admin.js'].map((file)=>readFileSync(new URL(`../../js/${file}`,import.meta.url),'utf8')).join('\n')+calendarSource+timelineSource+workflowSource+roomWorkflowSource;
 for(const contract of ['class Room extends BaseModel','class Booking extends BaseModel','class RoomRepository extends BaseRepository','this.post(\'/api/bookings\'','class MonthCalendar','class BookingDialog','class BookingWorkflow','class RoomSettings','class RoomWorkflow','adroom:add-booking','adr-admin-room-body','canManageRooms','window.confirm','this.title = String','title: String(values.get']) if(!sources.includes(contract)) throw new Error(`Frontendvertrag fehlt: ${contract}`);
 for(const contract of ['const sequence = ++loadSequence','if (sequence !== loadSequence) return;','if (sequence === loadSequence) notice.error','let month = formatMonth(new Date())']) if(!sources.includes(contract)) throw new Error(`Monatsladevertrag fehlt: ${contract}`);
@@ -32,4 +33,7 @@ const roomWorkflow=new roomWorkflowContext.window.AdRoom.RoomWorkflow({
 await roomWorkflow.create({name:'Nord'}); await roomWorkflow.update(3,{name:'Süd'}); await roomWorkflow.remove({id:3,name:'Süd'});
 if(roomCalls.filter(call=>call[0]==='create').length!==1||roomCalls.filter(call=>call[0]==='update').length!==1||roomCalls.filter(call=>call[0]==='delete').length!==1) throw new Error('Raumworkflow unterscheidet Anlegen, Bearbeiten und Löschen nicht korrekt.');
 for(const removed of ['adr-tab-settings',"showView('settings')"]) if(sources.includes(removed)) throw new Error(`Administrative Raumverwaltung liegt noch in der Fachansicht: ${removed}`);
+const adminBookingModel=adminTemplate.indexOf("\\OCP\\Util::addScript('adroom', 'models/booking');");
+const adminRepository=adminTemplate.indexOf("\\OCP\\Util::addScript('adroom', 'repositories/room-repository');");
+if(adminBookingModel<0||adminRepository<0||adminBookingModel>adminRepository) throw new Error('Der Raum-Adminbereich lädt das Buchungsmodell nicht vor dem gemeinsamen Monats-Repository.');
 console.log('AD Raumplaner frontend smoke test passed');

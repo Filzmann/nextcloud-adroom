@@ -4,6 +4,7 @@
 \OCP\Util::addScript('localbase', 'repositories/repository');
 \OCP\Util::addScript('localbase', 'ui/ui');
 \OCP\Util::addScript('adroom', 'models/room');
+\OCP\Util::addScript('adroom', 'models/booking');
 \OCP\Util::addScript('adroom', 'repositories/room-repository');
 \OCP\Util::addScript('adroom', 'modules/room-workflow');
 \OCP\Util::addScript('adroom', 'components/room-settings');
