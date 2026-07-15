@@ -24,6 +24,8 @@ Nextcloud-App-ID:
 - Raumloeschungen loeschen die zugehoerigen Buchungen. Die UI muss diese Auswirkung vor der Aktion deutlich bestaetigen.
 - Samstage, Sonntage und gesetzliche Feiertage in Berlin werden in der Monatsansicht textlich und optisch gekennzeichnet.
 - Der WordPress-Raumplaner ist nur fachliche Referenz. WordPress-IDs, Capabilities, Nonces, Shortcodes und Tabellen werden nicht uebernommen.
+- WordPress-Bestandsdaten werden nicht importiert. Der app-eigene Adminabschnitt installiert neutrale Räume und Buchungen ausschließlich als manuell bestätigten synthetischen Demo-Pack.
+- Beispielbuchungen gehören einem explizit registrierten lokalen Demokonto; ein vorhandenes fremdes oder LDAP-verwaltetes Konto wird niemals dafür wiederverwendet.
 
 ## Architektur und Sicherheit
 

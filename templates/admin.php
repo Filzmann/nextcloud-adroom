@@ -27,4 +27,11 @@
         <label>Reihenfolge <input name="sortOrder" type="number" min="0" value="0"></label>
         <button type="submit" class="primary">Raum anlegen</button>
     </form>
+    <section class="adr-admin-demo" aria-labelledby="adr-demo-heading">
+        <h3 id="adr-demo-heading">Demo-Pack</h3>
+        <p>Das Pack legt drei neutrale Räume und Beispielbuchungen unter einem synthetischen lokalen Demokonto an. Es wird nicht automatisch installiert und importiert keine Bestandsdaten.</p>
+        <p id="adr-demo-notice" class="adr-notice" role="status" aria-live="polite" hidden></p>
+        <label class="adr-demo-confirm"><input id="adr-demo-confirm" type="checkbox"> Ich bestätige die Installation synthetischer Demodaten.</label>
+        <button id="adr-demo-install" type="button" class="primary" disabled>Raum-Demo-Pack installieren</button>
+    </section>
 </section>

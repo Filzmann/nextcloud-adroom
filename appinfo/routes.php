@@ -11,5 +11,5 @@ return ['routes' => [
     ['name' => 'api#createRoom', 'url' => '/api/rooms', 'verb' => 'POST'],
     ['name' => 'api#updateRoom', 'url' => '/api/rooms/{id}', 'verb' => 'PUT'],
     ['name' => 'api#deleteRoom', 'url' => '/api/rooms/{id}', 'verb' => 'DELETE'],
+    ['name' => 'demo_admin#install', 'url' => '/api/admin/demo-pack/install', 'verb' => 'POST'],
 ]];
-
