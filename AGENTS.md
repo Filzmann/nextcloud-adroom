@@ -34,7 +34,7 @@ Nextcloud-App-ID:
 - Persistente Modelle bieten `get(...)`, `get_all([...])` und `toArray()`; direkte Modellpersistenz ist nicht erlaubt.
 - QueryBuilder-Parameter werden gebunden. Keine SQL-Fragmente aus Requests.
 - Der App-Root erfuellt den Nextcloud-Scrollvertrag; nur die Monatsmatrix scrollt horizontal.
-- Die organisationsweite Raumverwaltung liegt als eigener Abschnitt `Räume` im Nextcloud-Adminbereich der Suite. Der Raumkalender enthält nur fachliche Buchungsfunktionen; künftige persönliche Einstellungen gehören in einen eigenen App-Tab.
+- Die Raumverwaltung betrifft ausschließlich den AD Raumplaner und liegt deshalb in dessen eigenem Nextcloud-Adminabschnitt `AD Raumplaner`. Der Raumkalender enthält nur fachliche Buchungsfunktionen; künftige persönliche Einstellungen gehören in einen eigenen App-Tab.
 
 ## Gemeinsame Suite-Navigation
 

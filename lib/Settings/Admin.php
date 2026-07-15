@@ -8,14 +8,14 @@ use OCA\AdRoom\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Settings\ISettings;
 
-/** Zweck: Bindet die Raumstammdaten in den gemeinsamen AD-/BR-Suite-Adminbereich ein. */
+/** Zweck: Bindet die ausschließlich appbezogenen Raumstammdaten in den eigenen Adminabschnitt ein. */
 final class Admin implements ISettings {
     public function getForm(): TemplateResponse {
         return new TemplateResponse(Application::APP_ID, 'admin');
     }
 
     public function getSection(): string {
-        return 'orgsuite';
+        return Application::APP_ID;
     }
 
     public function getPriority(): int {

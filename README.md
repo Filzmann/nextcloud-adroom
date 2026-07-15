@@ -17,4 +17,6 @@ sudo -u www-data php occ app:enable orgsuite
 sudo -u www-data php occ app:enable adroom
 ```
 
-Räume werden nach der Aktivierung im Nextcloud-Adminbereich der OrgSuite eingerichtet. `adroom:demo:seed` ist ausschließlich für synthetische Testdaten bestimmt.
+Räume werden nach der Aktivierung im eigenen Nextcloud-Adminabschnitt `AD Raumplaner` eingerichtet. `adroom:demo:seed` ist ausschließlich für synthetische Testdaten bestimmt.
+
+Installations-, Betriebs- und Abnahmeunterlagen stehen im öffentlichen [AD-Suite-Projekt](https://github.com/Filzmann/ad-suite).

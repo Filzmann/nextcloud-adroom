@@ -5,9 +5,12 @@
     <name>AD Raumplaner</name>
     <summary>Monatliche Raumbelegung und kollisionsfreie Raumbuchungen.</summary>
     <description>Verwaltet Räume und eigene beziehungsweise administrative Buchungen in einer kompakten Monatsmatrix.</description>
-    <version>0.8.7-rc.1</version>
+    <version>0.8.8-rc.1</version>
     <licence>agpl</licence>
     <author>Simon</author>
+    <website>https://github.com/Filzmann/ad-suite</website>
+    <bugs>https://github.com/Filzmann/nextcloud-adroom/issues</bugs>
+    <repository type="git">https://github.com/Filzmann/nextcloud-adroom</repository>
     <namespace>AdRoom</namespace>
     <category>organization</category>
     <dependencies>
@@ -18,6 +21,7 @@
     </dependencies>
     <settings>
         <admin>OCA\AdRoom\Settings\Admin</admin>
+        <admin-section>OCA\AdRoom\Settings\AdminSection</admin-section>
     </settings>
     <commands>
         <command>OCA\AdRoom\Command\SeedDemoCommand</command>
