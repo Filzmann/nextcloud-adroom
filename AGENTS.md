@@ -47,9 +47,8 @@ Nextcloud-App-ID:
 
 ## Git, DDEV und Tests
 
-- Eigenstaendiges Git-Repository; Dateien gezielt stagen, niemals `git add .`.
-- Vor Commits Status, Diff-Statistik und Dateiliste pruefen.
+- Eigenstaendiges Git-Repository. Diese Datei und lokal referenzierte Skills bilden bei einem direkten Start die vollständige Repository-Steuerung.
+- Fuer Git-, Sandbox-, DDEV-/`occ`-Sicherheit, Verifikation und Learning Candidates gilt der lokal mitgefuehrte Skill `work-in-nextcloud-app`; die folgenden Raumplaner-Regeln und Pruefungen ergaenzen ihn.
 - DDEV-Mount: `/var/www/html/html/custom_apps/adroom`.
-- Migrationen laufen ueber `occ app:enable adroom` beziehungsweise `occ upgrade`.
 - Schnelle Tests: `php tests/run.php` und `node tests/run-js.mjs`.
 - Controller-, DI- und Migrationsaenderungen zusaetzlich in DDEV pruefen.
