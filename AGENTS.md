@@ -12,6 +12,8 @@ Nextcloud-App-ID:
 
     adroom
 
+Die priorisierte Produktplanung und offene Entscheidungen stehen in `ROADMAP.md`; verbindliche Fach-, Sicherheits- und Architekturregeln bleiben in dieser Datei.
+
 ## Fachvertrag
 
 - Der Monatsplan zeigt Tage als Zeilen und aktive Räume als Spalten. Innerhalb jedes Tages teilen sich alle Raumspalten eine vertikale Zeitachse: aufeinanderfolgende Buchungen stehen untereinander, zeitliche Lücken erzeugen Abstand und Buchungen verschiedener Räume bleiben zeitlich vergleichbar ausgerichtet.
