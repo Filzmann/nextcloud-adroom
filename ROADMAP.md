@@ -5,7 +5,7 @@ Diese Datei bündelt geplante Erweiterungen und offene Produktentscheidungen. Ve
 ## Aktueller Fokus
 
 - Monatsansicht, Kollisionsschutz, eigene Buchungsrechte und administrative Raumverwaltung auf einem realitätsnahen Staging fachlich abnehmen.
-- Löschbestätigung, Zeitraster, Wochenenden und Berliner Feiertage sichtbar und barrierefrei prüfen.
+- Löschbestätigung, Zeitraster, Wochenenden und die Feiertage der administrativ gewählten Organisationsregion sichtbar und barrierefrei prüfen.
 
 ## Geplante Erweiterungen
 

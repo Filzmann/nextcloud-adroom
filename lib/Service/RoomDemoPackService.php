@@ -5,13 +5,18 @@ declare(strict_types=1);
 namespace OCA\AdRoom\Service;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use OCA\AdRoom\Exception\BookingConflictException;
+use OCA\LocalBase\Calendar\CalendarContextSettingsService;
 use OCA\LocalBase\Service\DemoAccountProvisioningService;
 
 /** Zweck: Installiert neutrale Räume und Beispielbuchungen unter einem registrierten lokalen Demokonto. */
 final class RoomDemoPackService {
-    public function __construct(private DemoAccountProvisioningService $accounts, private RoomService $rooms, private BookingService $bookings) {}
+    public function __construct(
+        private DemoAccountProvisioningService $accounts,
+        private RoomService $rooms,
+        private BookingService $bookings,
+        private CalendarContextSettingsService $contexts,
+    ) {}
 
     /** @return array{accounts:array,rooms:int,createdBookings:int,skippedBookings:int} */
     public function install(): array {
@@ -29,7 +34,7 @@ final class RoomDemoPackService {
             if (!isset($existing[$definition['name']])) $existing[$definition['name']] = $this->rooms->save(null, $definition['name'], $definition['description'], $definition['sortOrder']);
         }
 
-        $day = new DateTimeImmutable('next monday', new DateTimeZone('Europe/Berlin'));
+        $day = new DateTimeImmutable('next monday', $this->contexts->context()->timezone());
         $samples = [
             ['Besprechungsraum Nord', '10:00', '11:00', 'AT', 'ASN Team A'],
             ['Besprechungsraum Süd', '12:00', '13:30', 'Sitzung', 'Büroteam Süd'],

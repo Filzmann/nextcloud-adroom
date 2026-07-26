@@ -17,6 +17,8 @@ AD Raumplaner funktioniert einzeln; Buchungen bleiben ohne Kalender oder Assiste
 
 Räume werden nach der Aktivierung im eigenen Nextcloud-Adminabschnitt `AD Raumplaner` eingerichtet. `adroom:demo:seed` ist ausschließlich für synthetische Testdaten bestimmt.
 
+Feiertage, Buchungszeiten und Monatsgrenzen richten sich nach dem gemeinsamen Kalenderkontext der AD-Suite. Land, Region und fachliche Zeitzone werden zentral durch die Administration gepflegt; ohne Änderung gilt Deutschland/Berlin.
+
 ## Roadmap
 
 Geplante Erweiterungen und offene Produktentscheidungen stehen in der [Roadmap](ROADMAP.md).

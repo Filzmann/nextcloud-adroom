@@ -10,6 +10,7 @@ use OCA\AdRoom\Exception\BookingConflictException;
 use OCA\AdRoom\Model\Booking;
 use OCA\AdRoom\Model\Room;
 use OCA\AdRoom\Repository\BookingRepository;
+use OCA\LocalBase\Calendar\CalendarContextSettingsService;
 use OCP\IUserManager;
 
 /**
@@ -25,8 +26,9 @@ final class BookingService {
         private RoomService $rooms,
         private IUserManager $users,
         private HolidayService $holidays,
+        CalendarContextSettingsService $contexts,
     ) {
-        $this->localTimezone = new DateTimeZone('Europe/Berlin');
+        $this->localTimezone = $contexts->context()->timezone();
         $this->utc = new DateTimeZone('UTC');
     }
 

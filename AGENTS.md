@@ -24,7 +24,8 @@ Die priorisierte Produktplanung und offene Entscheidungen stehen in `ROADMAP.md`
 - Alle angemeldeten Nutzer*innen duerfen Raeume und Buchungen lesen sowie eigene Buchungen anlegen, bearbeiten, in andere Raeume verschieben und loeschen.
 - Nextcloud-Admins duerfen alle Buchungen und die Raumliste verwalten.
 - Raumloeschungen loeschen die zugehoerigen Buchungen. Die UI muss diese Auswirkung vor der Aktion deutlich bestaetigen.
-- Samstage, Sonntage und gesetzliche Feiertage in Berlin werden in der Monatsansicht textlich und optisch gekennzeichnet.
+- Samstage, Sonntage und die gesetzlichen Feiertage der zentral in LocalBase konfigurierten Organisationsregion werden in der Monatsansicht textlich und optisch gekennzeichnet. Ohne abweichende Administration gilt Berlin.
+- Buchungszeiten und Monatsgrenzen verwenden die zentral konfigurierte fachliche Organisationszeitzone. Persönliche Nextcloud-Zeitzonen verändern nur die individuelle Anzeige, nicht den fachlichen Buchungskontext.
 - Der WordPress-Raumplaner ist nur fachliche Referenz. WordPress-IDs, Capabilities, Nonces, Shortcodes und Tabellen werden nicht uebernommen.
 - WordPress-Bestandsdaten werden nicht importiert. Der app-eigene Adminabschnitt installiert neutrale Räume und Buchungen ausschließlich als manuell bestätigten synthetischen Demo-Pack.
 - Beispielbuchungen gehören einem explizit registrierten lokalen Demokonto; ein vorhandenes fremdes oder LDAP-verwaltetes Konto wird niemals dafür wiederverwendet.
@@ -32,6 +33,7 @@ Die priorisierte Produktplanung und offene Entscheidungen stehen in `ROADMAP.md`
 ## Architektur und Sicherheit
 
 - Controller bleiben duenn. Validierung und Kollisionspruefung liegen im `BookingService`, Rechte im `RoomAccessService`, Datenzugriff in Repositories.
+- `HolidayService` ist nur ein app-spezifischer Projektionsadapter auf den gemeinsamen, zwischengespeicherten LocalBase-Feiertagskalender; AD Raumplaner pflegt keine eigene Feiertagsquelle oder Regionstabelle.
 - Deny by default: Jede schreibende API prueft die angemeldete Person und die Zielbuchung serverseitig.
 - Der Browser uebermittelt bei eigenen Buchungen keine vertrauenswuerdige Besitzer-UID; der Server setzt die UID aus der Session.
 - GET-Routen sind CSRF-frei, schreibende Routen behalten den Nextcloud-CSRF-Schutz.
