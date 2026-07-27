@@ -3,6 +3,12 @@
 declare(strict_types=1);
 
 namespace OCP { interface IUserManager { public function get(string $uid); } }
+namespace OCA\LocalBase\Calendar {
+    class Context { public function timezone(): \DateTimeZone { return new \DateTimeZone('America/New_York'); } }
+    class CalendarContextSettingsService { public function context(): Context { return new Context(); } }
+    class HolidayCalendar { public function toArray(): array { return ['publicHolidays' => []]; } }
+    class HolidayCalendarService { public function forYear(int $year): HolidayCalendar { return new HolidayCalendar(); } }
+}
 namespace OCA\AdRoom\Repository {
     class BookingRepository {
         public bool $overlap=false; public ?\OCA\AdRoom\Model\Booking $saved=null;
@@ -23,9 +29,9 @@ namespace {
     require __DIR__.'/../../lib/Service/BookingService.php';
     $repo=new OCA\AdRoom\Repository\BookingRepository();
     $users=new class implements OCP\IUserManager { public function get(string $uid){ return null; } };
-    $service=new OCA\AdRoom\Service\BookingService($repo,new OCA\AdRoom\Service\RoomService(),$users,new OCA\AdRoom\Service\HolidayService());
+    $service=new OCA\AdRoom\Service\BookingService($repo,new OCA\AdRoom\Service\RoomService(),$users,new OCA\AdRoom\Service\HolidayService(new OCA\LocalBase\Calendar\HolidayCalendarService()),new OCA\LocalBase\Calendar\CalendarContextSettingsService());
     if ($service->create(1,'2026-07-13T08:00','2026-07-13T09:00','Sitzung','Büroteam','admin')!==7) throw new RuntimeException('Gültige Buchung wurde nicht gespeichert.');
-    if ($repo->saved?->startsAt()->format('H:i')!=='06:00') throw new RuntimeException('Berliner Sommerzeit wurde nicht nach UTC normalisiert.');
+    if ($repo->saved?->startsAt()->format('H:i')!=='12:00') throw new RuntimeException('Administrative Fachzeitzone wurde nicht nach UTC normalisiert.');
     if ($repo->saved?->title()!=='Büroteam') throw new RuntimeException('Buchungstitel wurde nicht gespeichert.');
     $repo->overlap=true;
     try { $service->create(1,'2026-07-13T08:00','2026-07-13T09:00','Sitzung','Büroteam','admin'); throw new RuntimeException('Überschneidung wurde nicht blockiert.'); } catch (OCA\AdRoom\Exception\BookingConflictException) {}

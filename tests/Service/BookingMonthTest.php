@@ -6,6 +6,12 @@ namespace OCP {
     interface IUser { public function getDisplayName(): string; }
     interface IUserManager { public function get(string $uid): ?IUser; }
 }
+namespace OCA\LocalBase\Calendar {
+    class Context { public function timezone(): \DateTimeZone { return new \DateTimeZone('Europe/London'); } }
+    class CalendarContextSettingsService { public function context(): Context { return new Context(); } }
+    class HolidayCalendar { public function toArray(): array { return ['publicHolidays' => [['name' => 'Feiertag', 'startDate' => '2026-05-01', 'endDate' => '2026-05-01']]]; } }
+    class HolidayCalendarService { public function forYear(int $year): HolidayCalendar { return new HolidayCalendar(); } }
+}
 
 namespace OCA\AdRoom\Repository {
     use DateTimeImmutable;
@@ -57,12 +63,12 @@ namespace {
     $repository->bookings = [Booking::get(['id' => 5, 'roomId' => 2, 'userUid' => 'anna', 'purpose' => 'LG', 'title' => 'Leitung', 'startsAt' => '2026-07-13T06:00:00+00:00', 'endsAt' => '2026-07-13T07:00:00+00:00'])];
     $user = new class implements IUser { public function getDisplayName(): string { return 'Anna Beispiel'; } };
     $users = new class($user) implements IUserManager { public function __construct(private IUser $user) {} public function get(string $uid): ?IUser { return $uid === 'anna' ? $this->user : null; } };
-    $service = new BookingService($repository, new RoomService(), $users, new HolidayService());
+    $service = new BookingService($repository, new RoomService(), $users, new HolidayService(new \OCA\LocalBase\Calendar\HolidayCalendarService()), new \OCA\LocalBase\Calendar\CalendarContextSettingsService());
     $month = $service->month('2026-05', new RoomAccessService());
     if ($month['month'] !== '2026-05' || $month['bookings'][0]['userName'] !== 'Anna Beispiel' || !$month['bookings'][0]['canManage'] || !$month['capabilities']['canManageRooms']) {
         throw new RuntimeException('Monatsansicht projiziert Buchungen oder Rechte nicht korrekt.');
     }
-    if ($repository->lastRange[0]->format(DATE_ATOM) !== '2026-04-30T22:00:00+00:00' || $month['holidays'] === []) throw new RuntimeException('Monatsgrenzen oder Feiertage fehlen.');
+    if ($repository->lastRange[0]->format(DATE_ATOM) !== '2026-04-30T23:00:00+00:00' || $month['holidays'] === []) throw new RuntimeException('Administrative Monatsgrenzen oder gemeinsame Feiertage fehlen.');
     foreach (['Juli 2026', '2026-00', '2026-13'] as $invalid) {
         try { $service->month($invalid, new RoomAccessService()); throw new RuntimeException('Ungültiger Monat wurde akzeptiert.'); } catch (InvalidArgumentException) {}
     }

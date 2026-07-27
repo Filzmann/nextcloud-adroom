@@ -5,27 +5,50 @@ declare(strict_types=1);
 namespace OCA\AdRoom\Service;
 
 use DateTimeImmutable;
-use DateTimeZone;
+use OCA\LocalBase\Calendar\HolidayCalendarService as SharedHolidayCalendarService;
 
-/** Zweck: Liefert die fuer Berlin geltenden Feiertage ohne externen Laufzeitdienst. */
+/** Zweck: Projiziert die gemeinsamen regionalen Feiertage auf den angefragten Monat. */
 final class HolidayService {
+    public function __construct(private SharedHolidayCalendarService $calendars) {}
+
     /** @return array<string,string> */
     public function forMonth(int $year, int $month): array {
-        $tz = new DateTimeZone('Europe/Berlin');
-        $easter = (new DateTimeImmutable(sprintf('%04d-03-21',$year),$tz))->modify('+' . easter_days($year) . ' days');
-        $dates = [
-            sprintf('%04d-01-01',$year)=>'Neujahr',
-            sprintf('%04d-03-08',$year)=>'Internationaler Frauentag',
-            $easter->modify('-2 days')->format('Y-m-d')=>'Karfreitag',
-            $easter->modify('+1 day')->format('Y-m-d')=>'Ostermontag',
-            sprintf('%04d-05-01',$year)=>'Tag der Arbeit',
-            $easter->modify('+39 days')->format('Y-m-d')=>'Christi Himmelfahrt',
-            $easter->modify('+50 days')->format('Y-m-d')=>'Pfingstmontag',
-            sprintf('%04d-10-03',$year)=>'Tag der Deutschen Einheit',
-            sprintf('%04d-12-25',$year)=>'1. Weihnachtstag',
-            sprintf('%04d-12-26',$year)=>'2. Weihnachtstag',
-        ];
-        return array_filter($dates,static fn(string $name,string $date): bool => (int)substr($date,5,2)===$month,ARRAY_FILTER_USE_BOTH);
+        if ($month < 1 || $month > 12) {
+            throw new \InvalidArgumentException('Monat ist ungültig.');
+        }
+
+        $monthPrefix = sprintf('%04d-%02d-', $year, $month);
+        $dates = [];
+        foreach ($this->calendars->forYear($year)->toArray()['publicHolidays'] ?? [] as $period) {
+            if (!is_array($period)) {
+                continue;
+            }
+
+            $name = trim((string)($period['name'] ?? ''));
+            $start = $this->parseDate($period['startDate'] ?? null);
+            $end = $this->parseDate($period['endDate'] ?? null);
+            if ($name === '' || $start === null || $end === null || $end < $start) {
+                continue;
+            }
+
+            for ($date = $start; $date <= $end; $date = $date->modify('+1 day')) {
+                $key = $date->format('Y-m-d');
+                if (str_starts_with($key, $monthPrefix)) {
+                    $dates[$key] = $name;
+                }
+            }
+        }
+
+        ksort($dates);
+        return $dates;
+    }
+
+    private function parseDate(mixed $value): ?DateTimeImmutable {
+        if (!is_string($value)) {
+            return null;
+        }
+
+        $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value);
+        return $date !== false && $date->format('Y-m-d') === $value ? $date : null;
     }
 }
-
