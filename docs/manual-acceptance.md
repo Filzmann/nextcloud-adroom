@@ -43,6 +43,25 @@
 
 Die Kernfunktionalität des Raumplaners sowie die geprüften serverseitigen Berechtigungs- und CSRF-Schutzmechanismen funktionieren weitgehend korrekt. Die noch offenen Abnahmehindernisse konzentrieren sich auf kleine Viewports/Scrolling, die Darstellung von Fehlermeldungen, Tastaturbedienung sowie das fachlich geänderte Soll für Zeitgrenzen und Zeitraster.
 
+## Automatisierte Nacharbeit für `0.11.0-rc.1`
+
+Die fünf negativen Befunde wurden im Code bearbeitet und automatisiert abgesichert:
+
+- A7: App-Root ohne eigenen Seiten-Scroll, sticky Kopfbereich und eine in beide
+  Richtungen scrollbare Matrix innerhalb des verbleibenden Viewports.
+- B5/E5: Speicher- und Kollisionsfehler erscheinen als fokussierbare
+  `role="alert"`-Meldung im geöffneten Buchungsdialog.
+- B7: UI und Server verwenden ein 5-Minuten-Raster ohne 06–21-Uhr-Grenze;
+  der reale HTTP-Smoke legt selbstbereinigend eine Buchung um 00:05 Uhr an.
+- E4: Der native `cancel`-Pfad schließt den Dialog mit Escape und gibt den
+  Fokus an das auslösende Element zurück.
+
+PHP-, JavaScript-, Layout- und HTTP-Prüfungen sind für diese Verträge grün.
+Das historische manuelle Ergebnis unten bleibt unverändert; A7, B5, B7, E4
+und E5 benötigen vor dem Releaseurteil eine erneute Sicht- und
+Tastaturprüfung im Browser. Buchungen über Mitternacht bleiben bis zur
+Produktentscheidung ausdrücklich außerhalb des freigegebenen Vertrags.
+
 ---
 
 # A – Einstieg, Darstellung und Navigation
@@ -623,6 +642,10 @@ Betroffen waren die Seed-Demo-Commands von:
 Alle relevanten Apps ließen sich anschließend aktivieren und der Raumplaner funktionierte nach Reload wieder normal.
 
 **Bewertung:** Separater technischer Befund, nicht einem der 31 Abnahmetests zugerechnet. Vermutlich Versions-/Umbauartefakt zwischen den Apps und LocalBase.
+
+**Technische Nachprüfung für `0.11.0-rc.1`:** Mit LocalBase `0.10.0-rc.2`
+wurde das Nextcloud-Upgrade einschließlich AD Raumplaner erfolgreich
+ausgeführt; der frühere DI-Befund ist im aktuellen Stand nicht reproduzierbar.
 
 ---
 

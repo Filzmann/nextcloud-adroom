@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0-rc.1
+
+- Raumzeiten auf ein durchgängiges 5-Minuten-Raster ohne feste 06–21-Uhr-Grenze erweitert; Buchungen bleiben bis zur Produktentscheidung auf einen Kalendertag begrenzt.
+- Buchungsfehler im aktiven Dialog sichtbar gemacht sowie Escape-Schließen und Fokusrückgabe abgesichert.
+- Monatsnavigation und zweidimensional scrollbare Raummatrix für kleine Viewports stabilisiert.
+
 ## 0.9.0-rc.1
 
 - Eigenständige Navigation ohne OrgSuite ergänzt.

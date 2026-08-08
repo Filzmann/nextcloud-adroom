@@ -33,10 +33,13 @@ namespace {
     if ($service->create(1,'2026-07-13T08:00','2026-07-13T09:00','Sitzung','Büroteam','admin')!==7) throw new RuntimeException('Gültige Buchung wurde nicht gespeichert.');
     if ($repo->saved?->startsAt()->format('H:i')!=='12:00') throw new RuntimeException('Administrative Fachzeitzone wurde nicht nach UTC normalisiert.');
     if ($repo->saved?->title()!=='Büroteam') throw new RuntimeException('Buchungstitel wurde nicht gespeichert.');
+    foreach ([['2026-07-13T00:05','2026-07-13T00:10'],['2026-07-13T21:05','2026-07-13T23:55']] as [$start,$end]) {
+        if ($service->create(1,$start,$end,'Sitzung','Randzeit','admin')!==7) throw new RuntimeException('Gültige Fünf-Minuten-Buchung außerhalb der alten Tagesgrenzen wurde abgelehnt.');
+    }
     $repo->overlap=true;
     try { $service->create(1,'2026-07-13T08:00','2026-07-13T09:00','Sitzung','Büroteam','admin'); throw new RuntimeException('Überschneidung wurde nicht blockiert.'); } catch (OCA\AdRoom\Exception\BookingConflictException) {}
     $repo->overlap=false;
-    foreach ([['2026-07-13T08:07','2026-07-13T09:00'],['2026-07-13T05:45','2026-07-13T07:00'],['2026-07-13T09:00','2026-07-14T10:00']] as [$start,$end]) {
+    foreach ([['2026-07-13T08:07','2026-07-13T09:00'],['2026-07-13T09:00','2026-07-14T10:00'],['2026-07-13T09:00','2026-07-13T09:00']] as [$start,$end]) {
         try { $service->create(1,$start,$end,'Sitzung','Büroteam','admin'); throw new RuntimeException('Ungültige Zeit wurde akzeptiert.'); } catch (InvalidArgumentException) {}
     }
     try { $service->create(1,'2026-07-13T10:00','2026-07-13T11:00','AT','','admin'); throw new RuntimeException('Leerer Titel wurde akzeptiert.'); } catch (InvalidArgumentException) {}
