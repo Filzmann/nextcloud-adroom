@@ -2,11 +2,12 @@
 
 Diese Datei bündelt geplante Erweiterungen und offene Produktentscheidungen. Verbindliche Fach-, Sicherheits- und Architekturregeln stehen in `AGENTS.md`.
 
-## Freigegebene Umsetzungsaufgaben
+## Zukunftsplanung – nicht freigegeben
 
 ### ROOM-L10N – AD Raumplaner vollständig lokalisieren
 
-Status: bereit nach festgelegtem l10n-Pilotvertrag
+Status: später, nicht freigegeben; Pilot-App, Reihenfolge und Rohtext-Gate
+werden vor jeder Umsetzung appübergreifend separat freigegeben
 
 - Monats-/Wochentagsnamen und sichtbare UI-, Admin-, Validierungs- und
   Fehlermeldungen auf aktive Nextcloud-Locale und Nextcloud-l10n umstellen.
