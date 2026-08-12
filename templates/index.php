@@ -6,6 +6,7 @@
 \OCP\Util::addScript('adroom','models/room');
 \OCP\Util::addScript('adroom','models/booking');
 \OCP\Util::addScript('adroom','repositories/room-repository');
+\OCP\Util::addScript('adroom','modules/booking-wall-time');
 \OCP\Util::addScript('adroom','modules/booking-timeline');
 \OCP\Util::addScript('adroom','modules/booking-workflow');
 \OCP\Util::addScript('adroom','components/month-calendar');

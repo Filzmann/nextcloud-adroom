@@ -14,6 +14,11 @@
 
 .adr-admin { width:100%; max-width:none; box-sizing:border-box; }
 .adr-admin [hidden] { display:none !important; }
+.adr-admin .orgs-dashboard-grid { max-width:none; }
+.adr-admin .orgs-dashboard-widget { min-width:0; }
+.adr-admin #adr-retention-form { display:grid; gap:12px; }
+.adr-admin #adr-retention-form label { display:grid; gap:4px; }
+.adr-admin :is(button,input,select):focus-visible { outline:2px solid var(--color-primary-element); outline-offset:2px; }
 
 .adr-app [hidden] { display: none !important; }
 .adr-header,.adr-month-navigation,.adr-tabs,.adr-room-form,.adr-time-row,.adr-dialog header,.adr-dialog footer { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }

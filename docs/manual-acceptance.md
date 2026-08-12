@@ -62,6 +62,72 @@ und E5 benötigen vor dem Releaseurteil eine erneute Sicht- und
 Tastaturprüfung im Browser. Buchungen über Mitternacht bleiben bis zur
 Produktentscheidung ausdrücklich außerhalb des freigegebenen Vertrags.
 
+## Browser- und Runtime-Nachprüfung vom 12. August 2026
+
+Die Nachprüfung erfolgte lokal gegen Nextcloud `34.0.2` mit AD Raumplaner
+`0.11.0-rc.1`, LocalBase `0.10.0-rc.2` und OrgSuite `0.4.0-rc.1`. Nextcloud
+meldete keinen ausstehenden Datenbank-Upgrade. PHP-, JavaScript- und der
+selbstbereinigende authentifizierte HTTP-Smoke waren grün. CSS und JavaScript
+des Raumplaners wurden über den konfigurierten `custom_apps`-Webpfad jeweils
+mit HTTP 200 und passendem Content-Type ausgeliefert.
+
+Aktueller Nachweis der fünf nachgearbeiteten Befunde:
+
+- **A7 erfolgreich nachgeprüft:** Bei einem realen Chrome-Viewport von
+  390 × 844 Pixeln besaßen Dokument, Body und App-Root keinen horizontalen
+  Seitenüberlauf. Ausschließlich die Matrix war mit 355 Pixeln sichtbarer und
+  834 Pixeln tatsächlicher Breite horizontal scrollbar; sie blieb zugleich
+  der vertikale Scrollcontainer für den Monatsinhalt.
+- **B5 und E5 erfolgreich nachgeprüft:** Eine synthetische Buchung wurde über
+  die echte Oberfläche angelegt. Der zweite identische Speicherversuch wurde
+  als Überschneidung abgewiesen; die verständliche Meldung erschien sichtbar
+  im weiterhin geöffneten Dialog als `role="alert"` und erhielt den Fokus.
+  Die Testbuchung wurde danach erfolgreich über die geschützte API gelöscht.
+- **B7 erfolgreich nachgeprüft:** Der authentifizierte HTTP-Smoke legte eine
+  Buchung von 00:05 bis 00:10 Uhr an, erhielt für die Überschneidung HTTP 409
+  und entfernte die Testbuchung anschließend. UI und Server akzeptieren damit
+  das freigegebene 5-Minuten-Raster ohne die alte Grenze von 06:00 bis
+  21:00 Uhr.
+- **E4 teilweise nachgeprüft:** Ein im echten Browser-DOM ausgelöstes
+  `cancel`-Ereignis schloss den Dialog und gab den Fokus an den auslösenden
+  Button zurück. Chrome Headless erzeugte jedoch auch bei sichtbarem und
+  fokussiertem Target aus dem über DevTools gesendeten Escape-Tastendruck kein
+  natives `cancel`-Ereignis. Der physische Escape-Pfad bleibt deshalb bis zu
+  einer manuellen Tastaturprüfung **nicht vollständig verifiziert**.
+- **A6 erfolgreich nachgeprüft:** Eine synthetische Buchung von 03:05 bis
+  03:10 Uhr wurde im echten Browser zunächst mit `Europe/Berlin` und danach
+  mit `America/New_York` dargestellt. Beide Sitzungen zeigten unverändert
+  `03:05–03:10`. Die Monats-API projiziert UTC-Bestand dazu in die kanonische
+  Organisationszeitzone; Timeline, Tageszuordnung, Anzeige und
+  Bearbeitungsdialog verwenden deren fachliche Wandzeit. Die Testbuchung
+  wurde anschließend erfolgreich gelöscht.
+
+Unverändert nicht geprüft bleibt E3 ohne LocalBase. E3 wird erst nach der
+verbindlichen Runtime-/Standalone-Entscheidung neu definiert. Damit sind vier
+der fünf früher negativen Befunde und A6 erfolgreich nachgeprüft; E4 ist
+teilweise geprüft. Ein vollständiges Releaseurteil folgt erst nach der
+manuellen Escape-Prüfung und dem bewusst noch offenen E3-Vertrag.
+
+## Datenschutz-Pilotabnahme vom 12. August 2026
+
+Für den lokalen Pilot wurde in Nextcloud die dedizierte Gruppe
+`privacy-officer` angelegt, der bereits vorhandene DDEV-Benutzer `admin`
+zugeordnet und `localbase/privacy_admin_group` auf diese Gruppe gesetzt. Es
+wurde kein Benutzer neu angelegt. Die anschließende Laufzeitprüfung ergab:
+
+- Die autorisierte Admin-Auskunft antwortete mit HTTP 200, meldete den
+  registrierten Provider `adroom` als `complete` und den Gesamtbericht als
+  vollständig.
+- Die autorisierte Retention-Vorschau antwortete mit HTTP 200, meldete
+  `adroom` als `complete` und bestätigte ausdrücklich `dryRun: true`.
+- Es wurde keine Buchung gelöscht, anonymisiert oder anderweitig verändert.
+  Ohne freigegebene Frist und Maßnahme liefert der Provider weiterhin nur
+  `REVIEW`-Kandidaten.
+
+Die zuvor geprüfte Verweigerung ohne konfigurierte Datenschutzgruppe bleibt
+durch den Controller-Test belegt. Die Gruppen- und AppConfig-Änderung ist auf
+die lokale DDEV-Instanz begrenzt und keine Vorgabe für Produktion.
+
 ---
 
 # A – Einstieg, Darstellung und Navigation

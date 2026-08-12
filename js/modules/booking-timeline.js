@@ -30,8 +30,7 @@
         }
 
         minute(value) {
-            const date = new Date(value);
-            return date.getHours() * 60 + date.getMinutes();
+            return window.AdRoom.BookingWallTime.parts(value).minute;
         }
     }
 

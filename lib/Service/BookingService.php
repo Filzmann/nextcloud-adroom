@@ -54,6 +54,8 @@ final class BookingService {
         $bookingItems = [];
         foreach ($this->bookings->findRange($start->setTimezone($this->utc), $end->setTimezone($this->utc)) as $booking) {
             $item = $booking->toArray();
+            $item['startsAt'] = $booking->startsAt()->setTimezone($this->localTimezone)->format(DATE_ATOM);
+            $item['endsAt'] = $booking->endsAt()->setTimezone($this->localTimezone)->format(DATE_ATOM);
             $item['userName'] = $this->users->get($booking->userUid())?->getDisplayName() ?: $booking->userUid();
             $item['canManage'] = $access->canManageBooking($booking);
             $bookingItems[] = $item;

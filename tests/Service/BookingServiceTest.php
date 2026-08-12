@@ -23,10 +23,6 @@ namespace OCA\AdRoom\Service {
     class RoomService { public function get(int $id): ?object { return $id===1 ? (object)['id'=>1] : null; } public function all(): array { return []; } }
 }
 namespace {
-    require __DIR__.'/../../lib/Model/Booking.php';
-    require __DIR__.'/../../lib/Exception/BookingConflictException.php';
-    require __DIR__.'/../../lib/Service/HolidayService.php';
-    require __DIR__.'/../../lib/Service/BookingService.php';
     $repo=new OCA\AdRoom\Repository\BookingRepository();
     $users=new class implements OCP\IUserManager { public function get(string $uid){ return null; } };
     $service=new OCA\AdRoom\Service\BookingService($repo,new OCA\AdRoom\Service\RoomService(),$users,new OCA\AdRoom\Service\HolidayService(new OCA\LocalBase\Calendar\HolidayCalendarService()),new OCA\LocalBase\Calendar\CalendarContextSettingsService());

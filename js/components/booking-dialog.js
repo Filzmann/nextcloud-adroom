@@ -1,8 +1,6 @@
 (function() {
     'use strict';
 
-    const pad = value => String(value).padStart(2, '0');
-
     /** Zweck: Zeigt das Buchungsformular und übergibt Formularwerte an den Buchungsworkflow. */
     class BookingDialog {
         constructor(dialog, form, onSubmit) {
@@ -91,11 +89,7 @@
         }
 
         localParts(value) {
-            const date = new Date(value);
-            return {
-                date: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
-                time: `${pad(date.getHours())}:${pad(date.getMinutes())}`,
-            };
+            return window.AdRoom.BookingWallTime.parts(value);
         }
     }
 
